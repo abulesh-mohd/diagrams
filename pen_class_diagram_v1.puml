@@ -1,0 +1,69 @@
+@startuml
+
+left to right direction
+
+' === Base Class ===
+abstract class Pen {
+    - brand: String
+    - color: String
+    + write(): void
+}
+
+' === Inheriting Base Class ===
+class BallPen{
+    - refill: Refill
+    + changeRefill(Refill refill): void
+}
+
+class GelPen{
+    - refill: Refill
+    + changeRefill(Refill refill): void
+}
+
+class FountainPen {
+    - inkCartridge: InkCartridge
+    - nib: Nib
+    + refill(Ink ink): void
+}
+
+' === Support Class ===
+class Refill {
+    - ink: Ink
+    - nib: Nib
+}
+
+class InkCartridge{
+    - ink: Ink
+    + refill(): void
+}
+
+class Ink {
+    - brand: String
+    - inkColor: String
+    - inkType: InkType
+}
+
+class Nib {
+    - type: String
+    - size: double
+}
+
+enum InkType {
+    BALL,
+    GEL
+}
+
+' === Relationships ===
+BallPen --|> Pen : is a
+GelPen --|> Pen : is a
+FountainPen --|> Pen : is a
+
+BallPen o-- Refill : has a
+GelPen o-- Refill : has a
+FountainPen o-- InkCartridge : has a
+FountainPen o-- Nib : has a
+Refill o-- Ink : has a
+InkCartridge o-- Ink : has a
+Ink o-- InkType : has a
+
+@enduml
